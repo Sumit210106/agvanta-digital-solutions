@@ -25,7 +25,7 @@
 
 export const WP_BASE =
   process.env.NEXT_PUBLIC_WP_API_URL ??
-  "https://cms.agvanta.in/wp-json/wp/v2";
+  "https://wp.agvanta.in/wp-json/wp/v2";
 
 export const PRODUCTS_PER_PAGE = 12;
 

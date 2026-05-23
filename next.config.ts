@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cms.agvanta.in",
+        hostname: "wp.agvanta.in",
       },
     ],
   },
