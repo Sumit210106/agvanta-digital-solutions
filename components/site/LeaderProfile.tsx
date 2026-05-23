@@ -89,7 +89,7 @@ export function LeaderProfile() {
           >
             <span className="eyebrow">Agri-Input Industry Expert</span>
             <h2 className="text-3xl md:text-4xl font-semibold leading-tight">
-              Led by Agri-Input Industry Expert <br /> &ndash; <span className="text-gradient-green">Rajeev Raval</span>
+              Led by Agri-Input Industry Expert, <span className="text-gradient-green">Rajeev Raval</span>
             </h2>
 
             <div className="space-y-4 text-base md:text-lg text-muted-foreground leading-relaxed">

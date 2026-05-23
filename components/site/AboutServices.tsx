@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Smartphone,
   Cpu,
@@ -125,6 +126,80 @@ const SERVICES = [
   },
 ];
 
+interface ServiceCardProps {
+  service: typeof SERVICES[number];
+  index: number;
+}
+
+function ServiceCard({ service, index }: ServiceCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const Icon = service.icon;
+  const isGreen = service.tone === "green";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
+      className="group relative rounded-3xl border border-border bg-card p-6 hover:shadow-elegant transition-all duration-300 flex flex-col justify-between"
+    >
+      <div className="flex-1 flex flex-col">
+        {/* Icon Box */}
+        <div className={`h-12 w-12 rounded-2xl grid place-items-center text-primary-foreground shadow-sm group-hover:scale-105 transition-transform ${
+          isGreen ? "bg-gradient-green" : "bg-gradient-blue"
+        }`}>
+          <Icon className="h-6 w-6 text-white" />
+        </div>
+
+        {/* Title & Description */}
+        <h3 className="mt-5 text-lg font-semibold leading-snug group-hover:text-primary-deep transition-colors">
+          {service.title}
+        </h3>
+        <p className="mt-2.5 text-xs text-muted-foreground leading-relaxed">
+          {service.desc}
+        </p>
+
+        {/* Features List */}
+        <AnimatePresence initial={false}>
+          {isExpanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <ul className="mt-4 space-y-2 border-t border-border/50 pt-4">
+                {service.features.map((feat) => (
+                  <li key={feat} className="flex items-start gap-2">
+                    <ChevronRight className="h-3.5 w-3.5 text-primary mt-0.5 shrink-0" />
+                    <span className="text-xs font-semibold text-foreground/80 leading-snug">
+                      {feat}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <div className="mt-6 pt-2 flex items-center justify-between z-10">
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-xs font-semibold text-primary hover:text-primary-deep flex items-center gap-1 transition-colors cursor-pointer group/btn"
+        >
+          <span>{isExpanded ? "Read Less" : "Read More"}</span>
+          <ChevronRight className={`h-3.5 w-3.5 transition-transform duration-300 ${isExpanded ? "rotate-90" : "group-hover/btn:translate-x-0.5"}`} />
+        </button>
+      </div>
+
+      <div className="absolute inset-x-6 bottom-3 h-px bg-linear-to-r from-transparent via-border to-transparent" />
+    </motion.div>
+  );
+}
+
 export function AboutServices() {
   return (
     <section className="py-20 md:py-28 bg-surface overflow-hidden">
@@ -143,50 +218,9 @@ export function AboutServices() {
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {SERVICES.map((s, i) => {
-            const Icon = s.icon;
-            const isGreen = s.tone === "green";
-            return (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: i * 0.05 }}
-                className="group relative rounded-3xl border border-border bg-card p-6 hover:shadow-elegant transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Icon Box */}
-                  <div className={`h-12 w-12 rounded-2xl grid place-items-center text-primary-foreground shadow-sm group-hover:scale-105 transition-transform ${isGreen ? "bg-gradient-green" : "bg-gradient-blue"
-                    }`}>
-                    <Icon className="h-6 w-6 text-white" />
-                  </div>
-
-                  {/* Title & Description */}
-                  <h3 className="mt-5 text-lg font-semibold leading-snug group-hover:text-primary-deep transition-colors">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2.5 text-xs text-muted-foreground leading-relaxed">
-                    {s.desc}
-                  </p>
-
-                  {/* Features List */}
-                  <ul className="mt-4 space-y-2 border-t border-border/50 pt-4">
-                    {s.features.map((feat) => (
-                      <li key={feat} className="flex items-start gap-2">
-                        <ChevronRight className="h-3.5 w-3.5 text-primary mt-0.5 shrink-0" />
-                        <span className="text-xs font-semibold text-foreground/80 leading-snug">
-                          {feat}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="absolute inset-x-6 bottom-3 h-px bg-linear-to-r from-transparent via-border to-transparent" />
-              </motion.div>
-            );
-          })}
+          {SERVICES.map((s, i) => (
+            <ServiceCard key={s.title} service={s} index={i} />
+          ))}
         </div>
 
       </div>

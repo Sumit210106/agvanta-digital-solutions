@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Sprout,
@@ -10,7 +11,9 @@ import {
   BarChart3,
   Layers,
   UserCheck,
-  Trophy
+  Trophy,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 const ITEMS = [
@@ -71,6 +74,47 @@ const ITEMS = [
 ] as const;
 
 export function WhyAgvanta() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const updateCount = () => {
+      if (typeof window !== "undefined") {
+        let count = 3;
+        if (window.innerWidth < 640) {
+          count = 1;
+        } else if (window.innerWidth < 1024) {
+          count = 2;
+        }
+        setVisibleCount(count);
+        setCurrentIndex((prev) => Math.min(prev, ITEMS.length - count));
+      }
+    };
+    updateCount();
+    window.addEventListener("resize", updateCount);
+    return () => window.removeEventListener("resize", updateCount);
+  }, []);
+
+  const maxIndex = ITEMS.length - visibleCount;
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+  };
+
+  // Auto-slide effect
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [visibleCount, currentIndex, isPaused]);
+
   return (
     <section className="relative py-20 md:py-28 overflow-hidden bg-white">
 
@@ -93,37 +137,91 @@ export function WhyAgvanta() {
               Why Choose <span className="text-gradient-green">Agvanta</span>?
             </h2>
           </div>
-          <p className="text-muted-foreground max-w-md leading-relaxed text-sm md:text-base">
-            We combine deep agricultural expertise with practical digital execution to deliver business-oriented, scalable, and result-driven solutions.
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center lg:items-end justify-between gap-6 lg:max-w-2xl w-full">
+            <p className="text-muted-foreground leading-relaxed text-sm md:text-base flex-1">
+              We combine deep agricultural expertise with practical digital execution to deliver business-oriented, scalable, and result-driven solutions.
+            </p>
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={prevSlide}
+                className="h-11 w-11 rounded-full border border-border bg-white flex items-center justify-center text-foreground hover:bg-gradient-green hover:text-green-400 transition-all cursor-pointer shadow-sm"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="h-11 w-11 rounded-full border border-border bg-white flex items-center justify-center text-foreground hover:bg-gradient-green hover:text-green-400 transition-all cursor-pointer shadow-sm"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* 9-Grid Layout */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {ITEMS.map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: i * 0.05 }}
-                className="group relative rounded-3xl border border-border bg-card/60 backdrop-blur-xs p-6 hover:shadow-elegant hover:bg-card hover:-translate-y-0.5 transition-all duration-300"
-              >
+        {/* Carousel Container */}
+        <div
+          className="overflow-hidden -mx-3 px-3 py-4"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div
+            className="flex transition-transform duration-500 ease-out items-stretch"
+            style={{
+              transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
+            }}
+          >
+            {ITEMS.map((item, i) => {
+              const Icon = item.icon;
+              return (
                 <div
-                  className={`h-12 w-12 rounded-2xl grid place-items-center text-primary-foreground shadow-sm group-hover:scale-105 transition-transform ${item.tone === "green" ? "bg-gradient-green" : "bg-gradient-blue"
-                    }`}
+                  key={item.title}
+                  className="px-3 shrink-0 flex-none"
+                  style={{ width: `${100 / visibleCount}%` }}
                 >
-                  <Icon className="h-5 w-5 text-white" />
+                  <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.55, delay: i * 0.05 }}
+                    className="group relative h-full rounded-3xl border border-border bg-card/60 backdrop-blur-xs p-6 hover:shadow-elegant hover:bg-card hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between"
+                  >
+                    <div>
+                      <div
+                        className={`h-12 w-12 rounded-2xl grid place-items-center text-primary-foreground shadow-sm group-hover:scale-105 transition-transform ${
+                          item.tone === "green" ? "bg-gradient-green" : "bg-gradient-blue"
+                        }`}
+                      >
+                        <Icon className="h-5 w-5 text-white" />
+                      </div>
+                      <h3 className="mt-5 text-lg font-semibold leading-snug text-foreground">{item.title}</h3>
+                      <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
+                    <div className="absolute inset-x-6 bottom-3 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+                  </motion.div>
                 </div>
-                <h3 className="mt-5 text-lg font-semibold leading-snug text-foreground">{item.title}</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-                <div className="absolute inset-x-6 bottom-3 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
-              </motion.div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
+
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-2 mt-8">
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                currentIndex === i
+                  ? "w-6 bg-primary"
+                  : "w-2 bg-border hover:bg-muted-foreground/30"
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );

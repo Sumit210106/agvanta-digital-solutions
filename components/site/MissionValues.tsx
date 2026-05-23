@@ -17,27 +17,31 @@ export function MissionValues() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="lg:col-span-6 flex flex-col justify-between space-y-8"
+            className="lg:col-span-6 flex flex-col justify-center space-y-12 h-full"
           >
-            <div>
-              <div className="h-12 w-12 rounded-2xl bg-gradient-green grid place-items-center mb-6 shadow-glow">
-                <Lightbulb className="h-6 w-6 text-white" />
+            <div className="flex flex-col max-w-xl">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-12 w-12 rounded-2xl bg-gradient-green grid place-items-center shadow-glow shrink-0">
+                  <Lightbulb className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
+                  Our Vision
+                </h2>
               </div>
-              <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-foreground">
-                Our Vision
-              </h2>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
                 To empower agriculture businesses with intelligent, connected, and data-driven digital ecosystems that improve efficiency, strengthen stakeholder relationships, and accelerate sustainable growth.
               </p>
             </div>
 
-            <div className="pt-8 border-t border-border/80">
-              <div className="h-12 w-12 rounded-2xl bg-gradient-blue grid place-items-center mb-6 shadow-glow-blue">
-                <Target className="h-6 w-6 text-white" />
+            <div className="pt-8 border-t border-border/80 flex flex-col max-w-xl w-full">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-12 w-12 rounded-2xl bg-gradient-blue grid place-items-center shadow-glow-blue shrink-0">
+                  <Target className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
+                  Our Mission
+                </h2>
               </div>
-              <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-foreground">
-                Our Mission
-              </h2>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
                 To bridge agriculture and technology by delivering practical, innovative, and scalable digital transformation solutions tailored specifically for agri businesses and enterprises.
               </p>

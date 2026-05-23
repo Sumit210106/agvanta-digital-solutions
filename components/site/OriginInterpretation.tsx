@@ -55,7 +55,7 @@ export function OriginInterpretation() {
               A company empowering agriculture with <span className="text-gradient-green">knowledge, inputs and services</span>.
             </h2>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-              The Agvanta logo is a synthesis of our ideals. The elegant 'A' represents both Agvanta and Aham. The sweeping green represents nature and the deep knowledge of the soil that we cherish. The gradient flows into a vibrant blue, symbolising technology, water, clarity, and data-driven solutions.
+              The Agvanta logo is a synthesis of our ideals. The elegant 'A' represents Agvanta. The sweeping green represents nature and the deep knowledge of the soil that we cherish. The gradient flows into a vibrant blue, symbolising technology, water, clarity, and data-driven solutions.
             </p>
 
             <ul className="mt-8 space-y-6">
