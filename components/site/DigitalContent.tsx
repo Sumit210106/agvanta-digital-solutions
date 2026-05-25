@@ -216,51 +216,6 @@ export default function DigitalContent({ products }: DigitalContentProps) {
                 />
               </motion.div>
 
-              {/* Orbiting Stats Card 1 (Top Left) */}
-              <motion.div
-                initial={{ opacity: 0, x: -30, y: 20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="absolute top-4 left-2 sm:-left-4 md:-left-10 z-20 bg-white/90 backdrop-blur-md p-2 sm:p-3 rounded-xl md:rounded-2xl shadow-elegant border border-border/80 max-w-[110px] sm:max-w-[150px] md:max-w-[190px] hover:scale-105 transition-transform"
-              >
-                <div className="flex items-center gap-1 md:gap-2 mb-1 md:mb-1.5">
-                  <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Live Advisory</span>
-                </div>
-                <p className="text-[10px] md:text-xs font-semibold text-foreground leading-snug">Optimal Sowing: 24-28 May</p>
-                <p className="text-[8px] md:text-[9px] text-muted-foreground mt-0.5 md:mt-1">Satellite &amp; Weather Analysis</p>
-              </motion.div>
-
-              {/* Orbiting Stats Card 2 (Middle Right) */}
-              <motion.div
-                initial={{ opacity: 0, x: 30, y: -10 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute top-1/2 right-2 sm:-right-4 md:-right-8 z-20 bg-white/90 backdrop-blur-md p-2 sm:p-3 rounded-xl md:rounded-2xl shadow-elegant border border-border/80 max-w-[105px] sm:max-w-[145px] md:max-w-[180px] hover:scale-105 transition-transform"
-              >
-                <div className="flex items-center gap-1 md:gap-1.5 mb-1 md:mb-1.5">
-                  <span className="h-3.5 w-3.5 md:h-4.5 md:w-4.5 rounded-full bg-primary/10 grid place-items-center text-primary">
-                    <CheckCircle2 className="h-2.5 w-2.5 md:h-3 md:w-3" />
-                  </span>
-                  <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Crop Health</span>
-                </div>
-                <p className="text-[10px] md:text-xs font-semibold text-foreground">94% Health Rating</p>
-                <p className="text-[8px] md:text-[9px] text-muted-foreground mt-0.5">No fungal disease alert</p>
-              </motion.div>
-
-              {/* Orbiting Stats Card 3 (Bottom Left) */}
-              <motion.div
-                initial={{ opacity: 0, y: 30, x: -10 }}
-                animate={{ opacity: 1, y: 0, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-                className="absolute bottom-2 left-2 sm:-left-6 md:-left-8 z-20 bg-white/90 backdrop-blur-md p-2 sm:p-3 rounded-xl md:rounded-2xl shadow-elegant border border-border/80 max-w-[110px] sm:max-w-[150px] md:max-w-[190px] hover:scale-105 transition-transform"
-              >
-                <p className="text-[10px] md:text-xs font-semibold text-foreground flex items-center gap-1 md:gap-1.5">
-                  <span className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-blue-500 shrink-0" />
-                  Soil Moisture: 38%
-                </p>
-                <p className="text-[8px] md:text-[9px] text-muted-foreground mt-0.5 md:mt-1">Sensor &amp; Radar verification optimal</p>
-              </motion.div>
             </div>
 
           </div>
